@@ -1,0 +1,79 @@
+<HTML>
+  <HEAD>
+  <meta http-equiv=Content-Type content="text/html; charset=ISO-8859-1">
+  <TITLE>External Interface example 1</TITLE>
+
+    <SCRIPT LANGUAGE=JavaScript>
+
+		function thisMovie(movieName) 
+		{
+		       // IE and Netscape refer to the movie object differently.
+		       // This function returns the appropriate syntax
+		       // depending on the browser.
+		       // (From moock.org)
+		       if (isIE()) 
+		       {
+		         return window[movieName]
+		       } 
+		       else 
+		       {
+		         return document[movieName]
+		       }
+		}
+
+    function isIE() 
+    {
+			return navigator.appName.indexOf ("Microsoft") != -1;
+		}
+
+    // This function will call the ActionScript function "fromJS"
+    function makeCall(str)
+    {
+  	   thisMovie("ExternalInterfaceExample").fromJS(str);
+    }
+
+    // This function "fromAS" will be called from ActionScript
+    function fromAS(str)
+    {
+			document.inForm.inField.value = str;
+    }
+
+
+  </SCRIPT>
+
+  </HEAD>
+  <BODY>
+
+
+  <OBJECT classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000"
+          codebase="http://download.macromedia.com/pub/shockwave/
+                    cabs/flash/swflash.cab#version=8,0,0,0"
+          WIDTH="400" HEIGHT="300" id="ExternalInterfaceExample">
+	<param name="allowScriptAccess" value="always" />
+	<param name="movie" value="example1.swf" />
+	<param name="quality" value="high" />
+  <param name="bgcolor" value="#ffffff" />
+  <EMBED src="example1.swf" quality=high
+           bgcolor=#FFFFFF WIDTH="400" HEIGHT="300"
+           NAME="ExternalInterfaceExample" swLiveConnect="true"
+           ALLOWSCRIPTACCESS="always"
+           TYPE="application/x-shockwave-flash"
+           PLUGINSPAGE="http://www.macromedia.com/go/getflashplayer">
+    </EMBED>
+  </OBJECT>
+
+  <h4>External Interface Example: Javascript side</h4>
+
+  <FORM NAME="outForm" METHOD="POST" ACTION="javascript:makeCall(document.outForm.outField.value)">
+    Sending to ActionScript<BR>
+    <INPUT TYPE="TEXT" NAME="outField" VALUE=""><BR>
+    <INPUT TYPE="SUBMIT" VALUE="Send to AS">
+  </FORM>
+
+  <FORM NAME="inForm" METHOD="POST" ACTION="">
+    Receiving from ActionScript<BR>
+    <INPUT TYPE="TEXT" NAME="inField" VALUE=""><BR>
+  </FORM>
+
+  </BODY>
+</HTML>
